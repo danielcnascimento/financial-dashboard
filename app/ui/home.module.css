@@ -1,0 +1,8 @@
+.shape {
+  height: 0;
+  width: 0;
+  background-color: aquamarine;
+  border-bottom: 20px solid black;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
