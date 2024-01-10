@@ -3,6 +3,11 @@ import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchCustomers, fetchInvoiceById } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 
+/**
+ * This is a Page that is inside a segment page, basically, a "child page of a child page",
+ * when a user clicks on the edit button, he will be taken to this part, that is a "dynamic route", which the layout
+ * is statics, but some fields are dynamic.
+ */
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
 

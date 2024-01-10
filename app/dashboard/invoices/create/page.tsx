@@ -2,6 +2,10 @@ import Form from '@/app/ui/invoices/create-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchCustomers } from '@/app/lib/data';
 
+/**
+ * This is a Server page because it's calling a function that has SQL, it helps the architecture of the project,
+ *  so API layers are not necessary, (such as using React hooks to handle it)
+ */
 export default async function Page() {
   const customers = await fetchCustomers();
 
