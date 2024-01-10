@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import { FaceFrownIcon } from '@heroicons/react/24/outline';
 
+/**
+ * In case an invoice is not found in the data base, or the user try to visit an unexciting invoice, this page is being called
+ * by "notFound()" functions, a method from next/navigation.
+ */
 export default function NotFound() {
   return (
     <main className="flex h-full flex-col items-center justify-center gap-2">
