@@ -2,6 +2,9 @@
 
 import { useEffect } from 'react';
 
+/**
+ * A page created for Any error that occurs in app/dashboard/invoices.
+ */
 export default function Error({
   error,
   reset,
