@@ -18,6 +18,7 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
+  // TODO: Use hook "useFormState" to manipulate the error messages in the edit page, just like done in ./create-form page
   const updatedInvoicesWithId = updateInvoice.bind(null, invoice.id);
 
   return (
