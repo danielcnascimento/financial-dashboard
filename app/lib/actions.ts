@@ -7,31 +7,58 @@ import { redirect } from 'next/navigation';
 
 const FormSchema = zodForm.object({
   id: zodForm.string(),
-  customerId: zodForm.string(),
-  amount: zodForm.coerce.number(),
-  status: zodForm.enum(['pending', 'paid']),
+  customerId: zodForm.string({
+    invalid_type_error: 'Please select a costumer.',
+  }),
+  amount: zodForm.coerce
+    .number()
+    .gt(0, { message: 'Please enter an amount greater than $0.' }),
+  status: zodForm.enum(['pending', 'paid'], {
+    invalid_type_error: 'Please select an invoice status.',
+  }),
   date: zodForm.date(),
 });
 
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
+// this type actually shouldn't be here, but it's must to make the useFormState hook works without TS errors.
+export type State = {
+  errors?: {
+    customerId?: string[];
+    amount?: string[];
+    status?: string[];
+  };
+  message?: string | null;
+};
 /**
  * Creates invoice, refreshes and redirect
  * @param formData {FormData} HTML form data with generic type
  */
-export async function createInvoice(formData: FormData) {
-  const { amount, status, customerId } = CreateInvoice.parse(
-    Object.fromEntries(formData.entries()),
-  );
+export async function createInvoice(prevState: State, formData: FormData) {
+  const validatedFields = CreateInvoice.safeParse({
+    customerId: formData.get('customerId'),
+    amount: formData.get('amount'),
+    status: formData.get('status'),
+  });
 
-  const amountInCents = amount * 100;
+  console.log({ validatedFields });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Invoice.',
+    };
+  }
+
+  const amountInCents = validatedFields.data.amount * 100;
   const date = new Date().toISOString().split('T')[0];
 
   try {
     await sql`
     INSERT INTO invoices (customer_id, amount, status, date)
-    VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+    VALUES (${validatedFields.data.customerId}, ${amountInCents}, ${status}, ${date})
   `;
   } catch {
     console.log('Error');
