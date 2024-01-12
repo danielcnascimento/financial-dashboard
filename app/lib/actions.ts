@@ -5,6 +5,7 @@ import { z as zodForm } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
+// Zod will work aside with useFormHook from react
 const FormSchema = zodForm.object({
   id: zodForm.string(),
   customerId: zodForm.string({
