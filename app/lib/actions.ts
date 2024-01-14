@@ -4,6 +4,29 @@ import { sql } from '@vercel/postgres';
 import { z as zodForm } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
+
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSigning':
+          return 'Invalid Credential';
+
+        default:
+          return 'Something went wrong :(';
+      }
+    }
+
+    throw {};
+  }
+}
 
 // Zod will work aside with useFormHook from react
 const FormSchema = zodForm.object({
