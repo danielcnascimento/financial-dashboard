@@ -9,6 +9,12 @@ import {
   LatestInvoicesSkeleton,
   RevenueChartSkeleton,
 } from '@/app/ui/skeletons';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Dashboard',
+};
+
 /**
  * This Page is inside the (overview) folder, it means that it will be a group only for the app/dashboard/page.tsx,
  * so it's possible to avoid bug from reaching the app/dashboard/customers or app/dashboard/invoices. Such as,
