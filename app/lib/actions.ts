@@ -24,7 +24,7 @@ export async function authenticate(
       }
     }
 
-    throw {};
+    throw error;
   }
 }
 
