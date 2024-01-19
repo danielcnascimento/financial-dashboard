@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     template: '%s | Acme Dashboard',
     default: 'Acme Dashboard',
   },
-  description: 'The official Financial app to manage invoices.',
+  description: 'The official Invoice app!',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
 
